@@ -1,0 +1,36 @@
+﻿{
+   "ConnectionStringName": "dab-connection-string",
+   "Dacpac": null,
+   "DatabaseType": 3,
+   "ProjectPath": "C:\\Users\\perez\\source\\repos\\WebApiRest\\WebApiRest",
+   "Tables": [
+      {
+         "Name": "[dbo].[Carrito]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Categorias]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Detalles_Pedido]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Historial_Compras]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Pedidos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Productos]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Usuarios]",
+         "ObjectType": 0
+      }
+   ]
+}

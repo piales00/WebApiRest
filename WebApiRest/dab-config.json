@@ -1,0 +1,433 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v1.3.19/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "@env('dab-connection-string')",
+    "options": {
+      "set-session-context": false
+    }
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/api",
+      "request-body-strict": true
+    },
+    "graphql": {
+      "enabled": true,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "host": {
+      "cors": {
+        "origins": [],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "StaticWebApps"
+      },
+      "mode": "development"
+    }
+  },
+  "entities": {
+    "Carrito": {
+      "source": {
+        "object": "[dbo].[Carrito]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Carrito",
+          "plural": "Carritos"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "id_carrito",
+                  "id_usuario",
+                  "id_producto",
+                  "cantidad",
+                  "fecha_agregado"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Producto": {
+          "cardinality": "one",
+          "target.entity": "Producto",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Usuario": {
+          "cardinality": "one",
+          "target.entity": "Usuario",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "Categoria": {
+      "source": {
+        "object": "[dbo].[Categorias]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Categoria",
+          "plural": "Categorias"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "id_categoria",
+                  "nombre",
+                  "descripcion"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Producto": {
+          "cardinality": "many",
+          "target.entity": "Producto",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "DetallesPedido": {
+      "source": {
+        "object": "[dbo].[Detalles_Pedido]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "DetallesPedido",
+          "plural": "DetallesPedidos"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "id_detalle",
+                  "id_pedido",
+                  "id_producto",
+                  "cantidad",
+                  "precio_unitario",
+                  "subtotal"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Pedido": {
+          "cardinality": "one",
+          "target.entity": "Pedido",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Producto": {
+          "cardinality": "one",
+          "target.entity": "Producto",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "HistorialCompra": {
+      "source": {
+        "object": "[dbo].[Historial_Compras]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "HistorialCompra",
+          "plural": "HistorialCompras"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "id_historial",
+                  "id_usuario",
+                  "id_pedido",
+                  "fecha_compra"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Pedido": {
+          "cardinality": "one",
+          "target.entity": "Pedido",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Usuario": {
+          "cardinality": "one",
+          "target.entity": "Usuario",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "Pedido": {
+      "source": {
+        "object": "[dbo].[Pedidos]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Pedido",
+          "plural": "Pedidos"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "id_pedido",
+                  "id_usuario",
+                  "fecha_pedido",
+                  "estado",
+                  "total",
+                  "metodo_pago"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "DetallesPedido": {
+          "cardinality": "many",
+          "target.entity": "DetallesPedido",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "HistorialCompra": {
+          "cardinality": "many",
+          "target.entity": "HistorialCompra",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Usuario": {
+          "cardinality": "one",
+          "target.entity": "Usuario",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "Producto": {
+      "source": {
+        "object": "[dbo].[Productos]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Producto",
+          "plural": "Productos"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "id_producto",
+                  "nombre",
+                  "descripcion",
+                  "precio",
+                  "stock",
+                  "imagen_url",
+                  "id_categoria"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Carrito": {
+          "cardinality": "many",
+          "target.entity": "Carrito",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "DetallesPedido": {
+          "cardinality": "many",
+          "target.entity": "DetallesPedido",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Categoria": {
+          "cardinality": "one",
+          "target.entity": "Categoria",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    },
+    "Usuario": {
+      "source": {
+        "object": "[dbo].[Usuarios]",
+        "type": "table"
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "Usuario",
+          "plural": "Usuarios"
+        }
+      },
+      "rest": {
+        "enabled": true
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "*",
+              "fields": {
+                "exclude": [],
+                "include": [
+                  "id_usuario",
+                  "nombre",
+                  "correo",
+                  "contrase?a",
+                  "direccion",
+                  "telefono",
+                  "rol",
+                  "imagen_url",
+                  "fecha_registro"
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "relationships": {
+        "Carrito": {
+          "cardinality": "many",
+          "target.entity": "Carrito",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "HistorialCompra": {
+          "cardinality": "many",
+          "target.entity": "HistorialCompra",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        },
+        "Pedido": {
+          "cardinality": "many",
+          "target.entity": "Pedido",
+          "source.fields": [],
+          "target.fields": [],
+          "linking.source.fields": [],
+          "linking.target.fields": []
+        }
+      }
+    }
+  }
+}
